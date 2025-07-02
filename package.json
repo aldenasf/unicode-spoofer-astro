@@ -18,5 +18,9 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.11"
+  },
+  "devDependencies": {
+    "@iconify-json/fa6-brands": "^1.2.5",
+    "@iconify-json/mdi": "^1.2.3"
   }
 }
