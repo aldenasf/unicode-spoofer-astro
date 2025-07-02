@@ -21,6 +21,9 @@
   },
   "devDependencies": {
     "@iconify-json/fa6-brands": "^1.2.5",
-    "@iconify-json/mdi": "^1.2.3"
+    "@iconify-json/mdi": "^1.2.3",
+    "prettier": "3.6.2",
+    "prettier-plugin-astro": "0.14.1",
+    "prettier-plugin-tailwindcss": "0.6.13"
   }
 }
