@@ -1,16 +1,29 @@
 {
-  "name": "unicode-spoofer",
-  "type": "module",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.1.11",
-    "astro": "^5.10.2",
-    "tailwindcss": "^4.1.11"
-  }
+    "name": "unicode-spoofer",
+    "type": "module",
+    "version": "0.0.1",
+    "scripts": {
+        "dev": "astro dev",
+        "build": "astro build",
+        "preview": "astro preview",
+        "astro": "astro"
+    },
+    "dependencies": {
+        "@astrojs/react": "^4.3.0",
+        "@tailwindcss/vite": "^4.1.11",
+        "@types/react": "^19.1.8",
+        "@types/react-dom": "^19.1.6",
+        "astro": "^5.10.2",
+        "astro-icon": "^1.1.5",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0",
+        "tailwindcss": "^4.1.11"
+    },
+    "devDependencies": {
+        "@iconify-json/fa6-brands": "^1.2.5",
+        "@iconify-json/mdi": "^1.2.3",
+        "prettier": "3.6.2",
+        "prettier-plugin-astro": "0.14.1",
+        "prettier-plugin-tailwindcss": "0.6.13"
+    }
 }
