@@ -1,1 +1,6 @@
+@import url('https://fontlibrary.org/face/symbola');
 @import "tailwindcss";
+
+@theme {
+    --font-symbola: 'Symbola', sans-serif;
+}
