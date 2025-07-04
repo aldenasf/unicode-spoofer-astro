@@ -3,14 +3,40 @@ import "../styles/global.css";
 import Head from "./Head.astro";
 import Body from "./Body.astro";
 import Footer from "../components/Footer.astro";
+
+interface Props {
+    page: "converter" | "characters" | "about";
+}
+
+const { page } = Astro.props;
 ---
 
 <Head />
 <Body>
-    <header>
-    </header>
+    <header></header>
 
     <main>
+        <div class="my-12 flex flex-col items-center justify-center">
+            <h1 class="text-3xl font-bold text-blue-500">Unicode Spoofer</h1>
+            <p class="mt-2">Replaces regular letters with visually similar alternatives</p>
+            <!-- <div class="mt-4 flex flex-row justify-center"> // TODO
+                <a
+                    class="mx-1 rounded-lg border-2 border-neutral-600 bg-neutral-800 px-3 py-0.5 transition-colors duration-150 hover:bg-neutral-600"
+                    class:list={[{ "!bg-neutral-600": page == "converter" }]}
+                    href="/">Converter</a
+                >
+                <a
+                    class="mx-1 rounded-lg border-2 border-neutral-600 bg-neutral-800 px-3 py-0.5 transition-colors duration-150 hover:bg-neutral-600"
+                    class:list={[{ "!bg-neutral-600": page == "characters" }]}
+                    href="/characters">Character List</a
+                >
+                <a
+                    class="mx-1 rounded-lg border-2 border-neutral-600 bg-neutral-800 px-3 py-0.5 transition-colors duration-150 hover:bg-neutral-600"
+                    class:list={[{ "!bg-neutral-600": page == "about" }]}
+                    href="/about">About</a
+                >
+            </div> -->
+        </div>
         <slot />
     </main>
 
