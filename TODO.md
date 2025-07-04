@@ -1,0 +1,3 @@
+- [ ] Add a page to view characters
+- [ ] Add an about page
+- [ ] Option to view spoofed characters [Converter.tsx:370](src/components/Converter.tsx)
