@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Head from "./Head.astro";
 import Body from "./Body.astro";
 import Footer from "../components/Footer.astro";
+import Analytics from "@vercel/analytics/astro";
 
 interface Props {
     page: "converter" | "characters" | "about";
@@ -41,4 +42,5 @@ const { page } = Astro.props;
     </main>
 
     <Footer />
+    <Analytics />
 </Body>
