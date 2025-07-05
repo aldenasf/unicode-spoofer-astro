@@ -191,7 +191,7 @@ const Converter: React.FC<Props> = (props) => {
 
         activeLetters.forEach((letter) => {
             if (result.includes(letter.original)) {
-                const occurrences = (result.match(new RegExp(letter.original, "g")) || []).length;
+                const occurrences = (result.match(new RegExp(escapeRegExp(letter.original), "g")) || []).length;
                 totalCount += occurrences;
                 result = result.replaceAll(letter.original, letter.modified);
 
@@ -216,6 +216,34 @@ const Converter: React.FC<Props> = (props) => {
         setReplacements(localReplacements);
         setTotalSpoofedCount(totalCount);
         setWarnLetters(() => localReplacements.length === 0);
+    }
+
+    /**
+     * Escapes special regex characters in a string so it can be used safely in a RegExp constructor.
+     * This prevents special characters from being interpreted as regex metacharacters.
+     *
+     * For example:
+     * - "." becomes "\\." (matches literal dot instead of any character)
+     * - "?" becomes "\\?" (matches literal question mark instead of zero-or-one quantifier)
+     *
+     * The following special regex characters are escaped:
+     * [ \ ^ $ . | ? * + ( ) { } ]
+     *
+     * @param string - The input string containing possible regex special characters
+     * @returns A new string with all regex special characters properly escaped
+     *
+     * @example
+     * // Returns "\\?\\.\\*"
+     * escapeRegExp("?.*");
+     *
+     * @example
+     * // Safe usage in RegExp:
+     * const searchText = "file.txt";
+     * const regex = new RegExp(escapeRegExp(searchText)); // Matches "file.txt" literally
+     */
+
+    function escapeRegExp(string: string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
 
     function getUTF8Bytes(char: string): string[] {
