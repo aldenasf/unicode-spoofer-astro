@@ -103,7 +103,6 @@ export const Letters = {
         { original: "}", modified: "", block: "" },
         { original: "|", modified: "", block: "" },
         { original: ":", modified: "", block: "" },
-        { original: '"', modified: "", block: "" },
         { original: "<", modified: "", block: "" },
         { original: ">", modified: "", block: "" },
         { original: "?", modified: "", block: "" },
@@ -210,6 +209,9 @@ const Converter: React.FC<Props> = (props) => {
             console.log(result.split("").join("﻿"));
         }
 
+        setInputStats(() => {
+            return { total: inputText.length, unique: new Set(inputText).size };
+        });
         setOutput(result);
         setReplacements(localReplacements);
         setTotalSpoofedCount(totalCount);
