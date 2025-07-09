@@ -166,13 +166,6 @@ const Characters = () => {
                     <tfoot></tfoot>
                 </table>
             </div>
-
-            <a
-                href="https://github.com/aldenasf/unicode-spoofer-astro/blob/HEAD/src/scripts/letters.ts"
-                className="transition-color mt-4 rounded-lg border-2 border-neutral-600 bg-neutral-800 px-4 py-2 duration-150 hover:bg-neutral-600"
-            >
-                Contribute to this list
-            </a>
         </div>
     );
 };
