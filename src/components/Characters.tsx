@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Letters, LettersDisplay, getCodePointHex, getUTF16LEBytes, getUTF8Bytes } from "../scripts/letters";
 const Characters = () => {
     const Font = {
-        mono: "jetbrainsmono",
+        mono: "mono",
         sans: "sans",
         serif: "symbola",
     };
@@ -101,7 +101,7 @@ const Characters = () => {
                     `,
                 }}
             ></div>
-            <div ref={stickyRef} className="sticky top-0 z-20 w-full py-4">
+            <div ref={stickyRef} className="sticky top-0 z-20 w-full p-4 lg:px-0">
                 <div className="flex flex-row items-center gap-3 rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
                     <p className="text-lg font-semibold">Fonts</p>
                     <div className="flex flex-row gap-2">
@@ -166,6 +166,13 @@ const Characters = () => {
                     <tfoot></tfoot>
                 </table>
             </div>
+
+            <a
+                href="https://github.com/aldenasf/unicode-spoofer-astro/blob/HEAD/src/scripts/letters.ts"
+                className="transition-color mt-4 rounded-lg border-2 border-neutral-600 bg-neutral-800 px-4 py-2 duration-150 hover:bg-neutral-600"
+            >
+                Contribute to this list
+            </a>
         </div>
     );
 };

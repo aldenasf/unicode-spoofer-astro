@@ -4,5 +4,5 @@
 
 @theme {
     --font-symbola: 'Symbola', serif;
-    --font-jetbrainsmono: "JetBrains Mono", monospace;
+    --font-mono: 'JetBrains Mono', monospace;
 }
