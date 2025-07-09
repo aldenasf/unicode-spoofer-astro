@@ -7,6 +7,7 @@ interface Props {
 }
 
 const Converter: React.FC<Props> = (props) => {
+    const [font, setFont] = useState<Font>("sans");
     const [input, setInput] = useState(props.initialInput || "");
     const [output, setOutput] = useState("");
     const [replacements, setReplacements] = useState<
@@ -40,6 +41,8 @@ const Converter: React.FC<Props> = (props) => {
             convertText(props.initialInput);
         }
     }, []);
+
+    type Font = "sans" | "symbola" | "mono";
 
     function convertText(inputText: string, settingsOverwrite?: typeof settings, blocksOverwrite?: typeof blocks) {
         let localReplacements: typeof replacements = [];
@@ -185,6 +188,29 @@ const Converter: React.FC<Props> = (props) => {
         );
     };
 
+    const FontSelectorInput = ({ name, displayText }: { name: Font; displayText: string }) => {
+        return (
+            <label
+                htmlFor={`font-${name}`}
+                className={`flex h-auto w-auto cursor-pointer flex-row rounded-lg border-2 p-2 transition-colors duration-150 hover:border-blue-700 ${font === name ? "border-blue-700" : "border-neutral-600"}`}
+            >
+                <span>
+                    <input
+                        type="radio"
+                        name="font"
+                        id={`font-${name}`}
+                        className="hidden"
+                        checked={font === name}
+                        onChange={(e) => {
+                            setFont((prev) => name);
+                        }}
+                    />
+                    <span>{displayText}</span>
+                </span>
+            </label>
+        );
+    };
+
     return (
         <div className="flex w-screen max-w-6xl flex-col items-center justify-center px-4">
             <div className="flex w-full max-w-4xl flex-col gap-4 lg:flex-row">
@@ -196,7 +222,7 @@ const Converter: React.FC<Props> = (props) => {
                         </p>
                     </div>
                     <textarea
-                        className="h-72 w-full resize-none rounded-lg border-2 border-neutral-600 bg-neutral-800 p-2"
+                        className={`h-72 w-full resize-none rounded-lg border-2 border-neutral-600 bg-neutral-800 p-2 font-${font}`}
                         placeholder="Input"
                         value={input}
                         onChange={(e) => {
@@ -216,7 +242,7 @@ const Converter: React.FC<Props> = (props) => {
                         </p>
                     </div>
                     <textarea
-                        className="h-72 w-full resize-none rounded-lg border-2 border-neutral-600 bg-neutral-800 p-2"
+                        className={`h-72 w-full resize-none rounded-lg border-2 border-neutral-600 bg-neutral-800 p-2 font-${font}`}
                         placeholder="Output"
                         value={output}
                         readOnly
@@ -320,6 +346,17 @@ const Converter: React.FC<Props> = (props) => {
                 </div>
             </div>
 
+            <div className="mt-4 w-full max-w-4xl lg:px-0">
+                <div className="flex flex-row items-center gap-3 rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
+                    <p className="text-lg font-semibold">Fonts</p>
+                    <div className="flex flex-row gap-2">
+                        <FontSelectorInput name="symbola" displayText="Sans Serif"></FontSelectorInput>
+                        <FontSelectorInput name="sans" displayText="Sans"></FontSelectorInput>
+                        <FontSelectorInput name="mono" displayText="Monospace"></FontSelectorInput>
+                    </div>
+                </div>
+            </div>
+
             <div
                 className={`mt-4 flex w-full max-w-screen flex-row items-center rounded-lg bg-amber-600 p-4 lg:max-w-xl ${!warnLetters && "hidden"}`}
             >
@@ -342,10 +379,10 @@ const Converter: React.FC<Props> = (props) => {
                         {replacements.map((replacement, index) => (
                             <tr key={index} className="h-10">
                                 <td className="border border-neutral-600 text-center">
-                                    <span className="font-symbola mx-0.5 px-1 text-2xl">{replacement.original}</span>
+                                    <span className={`font-${font} mx-0.5 px-1 text-2xl`}>{replacement.original}</span>
                                 </td>
                                 <td className="border border-neutral-600 text-center">
-                                    <span className="font-symbola mx-0.5 px-1 text-2xl">{replacement.modified}</span>
+                                    <span className={`font-${font} mx-0.5 px-1 text-2xl`}>{replacement.modified}</span>
                                 </td>
                                 <td className="border border-neutral-600 text-center">
                                     <span className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
