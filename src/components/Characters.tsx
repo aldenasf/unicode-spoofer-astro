@@ -1,15 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Letters, LettersDisplay, getCodePointHex, getUTF16LEBytes, getUTF8Bytes } from "../scripts/letters";
 const Characters = () => {
-    const Font = {
-        mono: "mono",
-        sans: "sans",
-        serif: "symbola",
-    };
+    type Font = "sans" | "symbola" | "mono";
 
-    type FontType = keyof typeof Font;
-
-    const [font, setFont] = useState<FontType>("serif");
+    const [font, setFont] = useState<Font>("symbola");
     const [isSticky, setIsSticky] = useState(false);
     const stickyRef = useRef<HTMLDivElement>(null);
 
@@ -37,17 +31,17 @@ const Characters = () => {
         };
     }, []);
 
-    const FontSelectorInput = ({ name, displayText }: { name: FontType; displayText: string }) => {
+    const FontSelectorInput = ({ name, displayText }: { name: Font; displayText: string }) => {
         return (
             <label
-                htmlFor={`font-${Font[name]}`}
+                htmlFor={`font-${name}`}
                 className={`flex h-auto w-auto cursor-pointer flex-row rounded-lg border-2 p-2 transition-colors duration-150 hover:border-blue-700 ${font === name ? "border-blue-700" : "border-neutral-600"}`}
             >
                 <span>
                     <input
                         type="radio"
                         name="font"
-                        id={`font-${Font[name]}`}
+                        id={`font-${name}`}
                         className="hidden"
                         checked={font === name}
                         onChange={(e) => {
@@ -105,7 +99,7 @@ const Characters = () => {
                 <div className="flex flex-row items-center gap-3 rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
                     <p className="text-lg font-semibold">Fonts</p>
                     <div className="flex flex-row gap-2">
-                        <FontSelectorInput name="serif" displayText="Sans Serif"></FontSelectorInput>
+                        <FontSelectorInput name="symbola" displayText="Sans Serif"></FontSelectorInput>
                         <FontSelectorInput name="sans" displayText="Sans"></FontSelectorInput>
                         <FontSelectorInput name="mono" displayText="Monospace"></FontSelectorInput>
                     </div>
@@ -128,14 +122,10 @@ const Characters = () => {
                             Letters[key as keyof typeof Letters].map((letter, index2) => (
                                 <tr key={index1 + index2} className={`h-10 ${!letter.modified && "bg-red-950"}`}>
                                     <td className="border border-neutral-600 text-center">
-                                        <span className={`mx-0.5 px-1 text-2xl font-${Font[font]}`}>
-                                            {letter.original}
-                                        </span>
+                                        <span className={`mx-0.5 px-1 text-2xl font-${font}`}>{letter.original}</span>
                                     </td>
                                     <td className="border border-neutral-600 text-center">
-                                        <span className={`mx-0.5 px-1 text-2xl font-${Font[font]}`}>
-                                            {letter.modified}
-                                        </span>
+                                        <span className={`mx-0.5 px-1 text-2xl font-${font}`}>{letter.modified}</span>
                                     </td>
                                     <td className="border border-neutral-600 text-center">
                                         <span className="mx-0.5 px-1 font-mono text-rose-400">
