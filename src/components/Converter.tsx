@@ -1,139 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaCopy, FaRegCopy, FaTriangleExclamation } from "react-icons/fa6";
-
-export const Letters = {
-    uppercase: [
-        { original: "A", modified: "А", block: "Cyrillic" },
-        { original: "B", modified: "В", block: "Cyrillic" },
-        { original: "C", modified: "С", block: "Cyrillic" },
-        { original: "D", modified: "D", block: "Cyrillic" },
-        { original: "E", modified: "Е", block: "Cyrillic" },
-        { original: "F", modified: "", block: "" },
-        { original: "G", modified: "", block: "" },
-        { original: "H", modified: "Н", block: "Cyrillic" },
-        { original: "I", modified: "І", block: "Cyrillic" },
-        { original: "J", modified: "Ј", block: "Cyrillic" },
-        { original: "K", modified: "К", block: "Cyrillic" },
-        { original: "L", modified: "", block: "" },
-        { original: "M", modified: "М", block: "Cyrillic" },
-        { original: "N", modified: "Ν", block: "Greek and Coptic" },
-        { original: "O", modified: "О", block: "Cyrillic" },
-        { original: "P", modified: "Р", block: "Cyrillic" },
-        { original: "Q", modified: "", block: "" },
-        { original: "R", modified: "", block: "" },
-        { original: "S", modified: "Ѕ", block: "Cyrillic" },
-        { original: "T", modified: "Т", block: "Cyrillic" },
-        { original: "U", modified: "", block: "" },
-        { original: "V", modified: "", block: "" },
-        { original: "W", modified: "", block: "" },
-        { original: "X", modified: "Х", block: "Cyrillic" },
-        { original: "Y", modified: "Ү", block: "Cyrillic" },
-        { original: "Z", modified: "Ζ", block: "Greek and Coptic" },
-    ],
-
-    lowercase: [
-        { original: "a", modified: "а", block: "Cyrillic" },
-        { original: "b", modified: "", block: "" },
-        { original: "c", modified: "с", block: "Cyrillic" },
-        { original: "d", modified: "", block: "" },
-        { original: "e", modified: "е", block: "Cyrillic" },
-        { original: "f", modified: "", block: "" },
-        { original: "g", modified: "", block: "" },
-        { original: "h", modified: "һ", block: "Cyrillic" },
-        { original: "i", modified: "і", block: "Cyrillic" },
-        { original: "j", modified: "ј", block: "Cyrillic" },
-        { original: "k", modified: "", block: "" },
-        { original: "l", modified: "l", block: "Cyrillic" },
-        { original: "m", modified: "", block: "" },
-        { original: "n", modified: "", block: "" },
-        { original: "o", modified: "о", block: "Cyrillic" },
-        { original: "p", modified: "р", block: "Cyrillic" },
-        { original: "q", modified: "", block: "" },
-        { original: "r", modified: "", block: "" },
-        { original: "s", modified: "ѕ", block: "Cyrillic" },
-        { original: "t", modified: "", block: "" },
-        { original: "u", modified: "", block: "" },
-        { original: "v", modified: "", block: "" },
-        { original: "w", modified: "", block: "" },
-        { original: "x", modified: "х", block: "Cyrillic" },
-        { original: "y", modified: "у", block: "Cyrillic" },
-        { original: "z", modified: "", block: "" },
-    ],
-
-    numbers: [
-        { original: "0", modified: "", block: "" },
-        { original: "1", modified: "", block: "" },
-        { original: "2", modified: "", block: "" },
-        { original: "3", modified: "З", block: "Cyrillic" },
-        { original: "4", modified: "", block: "" },
-        { original: "5", modified: "", block: "" },
-        { original: "6", modified: "", block: "" },
-        { original: "7", modified: "", block: "" },
-        { original: "8", modified: "", block: "" },
-        { original: "9", modified: "", block: "" },
-    ],
-
-    symbols: [
-        { original: "/", modified: "∕", block: "Mathematical Operators" },
-        { original: "!", modified: "ǃ", block: "Latin Extended-B" },
-        { original: ".", modified: "․", block: "General Punctuation" },
-        { original: ",", modified: "‚", block: "General Punctuation" },
-        { original: ";", modified: ";", block: "General Punctuation" },
-        { original: '"', modified: "", block: "" },
-        { original: "@", modified: "", block: "" },
-        { original: "#", modified: "", block: "" },
-        { original: "$", modified: "", block: "" },
-        { original: "%", modified: "", block: "" },
-        { original: "^", modified: "", block: "" },
-        { original: "&", modified: "", block: "" },
-        { original: "*", modified: "", block: "" },
-        { original: "(", modified: "", block: "" },
-        { original: ")", modified: "", block: "" },
-        { original: "`", modified: "", block: "" },
-        { original: "-", modified: "", block: "" },
-        { original: "=", modified: "", block: "" },
-        { original: "[", modified: "", block: "" },
-        { original: "]", modified: "", block: "" },
-        { original: "\\", modified: "", block: "" },
-        { original: "'", modified: "", block: "" },
-        { original: "~", modified: "", block: "" },
-        { original: "_", modified: "", block: "" },
-        { original: "+", modified: "", block: "" },
-        { original: "{", modified: "", block: "" },
-        { original: "}", modified: "", block: "" },
-        { original: "|", modified: "", block: "" },
-        { original: ":", modified: "", block: "" },
-        { original: '"', modified: "", block: "" },
-        { original: "<", modified: "", block: "" },
-        { original: ">", modified: "", block: "" },
-        { original: "?", modified: "", block: "" },
-    ],
-
-    spaces: [{ original: " ", modified: " ", block: "General Punctuation" }],
-};
-
-const LettersDisplay = {
-    uppercase: {
-        display: "Spoof Uppercase Letters",
-        description: "",
-    },
-    lowercase: {
-        display: "Spoof Lowercase Letters",
-        description: "",
-    },
-    numbers: {
-        display: "Spoof Numbers",
-        description: "",
-    },
-    symbols: {
-        display: "Spoof Symbols",
-        description: "",
-    },
-    spaces: {
-        display: "Spoof Spaces",
-        description: "Replace regular spaces with 1/4em spaces.",
-    },
-};
+import { Letters, LettersDisplay, getCodePointHex, getUTF8Bytes, getUTF16LEBytes } from "../scripts/letters";
 
 interface Props {
     initialInput?: string;
@@ -192,14 +59,13 @@ const Converter: React.FC<Props> = (props) => {
 
         activeLetters.forEach((letter) => {
             if (result.includes(letter.original)) {
-                const occurrences = (result.match(new RegExp(letter.original, "g")) || []).length;
+                const occurrences = (result.match(new RegExp(escapeRegExp(letter.original), "g")) || []).length;
                 totalCount += occurrences;
                 result = result.replaceAll(letter.original, letter.modified);
 
                 const utf8 = getUTF8Bytes(letter.modified);
                 const utf16le = getUTF16LEBytes(letter.modified);
-                const codePointHex =
-                    letter.modified.codePointAt(0)?.toString(16).toUpperCase().padStart(4, "0") || "0000";
+                const codePointHex = getCodePointHex(letter.modified);
 
                 localReplacements.push({ ...letter, utf8, utf16le, codePointHex });
             }
@@ -210,25 +76,41 @@ const Converter: React.FC<Props> = (props) => {
             console.log(result.split("").join("﻿"));
         }
 
+        setInputStats(() => {
+            return { total: inputText.length, unique: new Set(inputText).size };
+        });
         setOutput(result);
         setReplacements(localReplacements);
         setTotalSpoofedCount(totalCount);
         setWarnLetters(() => localReplacements.length === 0);
     }
 
-    function getUTF8Bytes(char: string): string[] {
-        const encoder = new TextEncoder();
-        return Array.from(encoder.encode(char)).map((b) => b.toString(16).toUpperCase().padStart(2, "0"));
-    }
+    /**
+     * Escapes special regex characters in a string so it can be used safely in a RegExp constructor.
+     * This prevents special characters from being interpreted as regex metacharacters.
+     *
+     * For example:
+     * - "." becomes "\\." (matches literal dot instead of any character)
+     * - "?" becomes "\\?" (matches literal question mark instead of zero-or-one quantifier)
+     *
+     * The following special regex characters are escaped:
+     * [ \ ^ $ . | ? * + ( ) { } ]
+     *
+     * @param string - The input string containing possible regex special characters
+     * @returns A new string with all regex special characters properly escaped
+     *
+     * @example
+     * // Returns "\\?\\.\\*"
+     * escapeRegExp("?.*");
+     *
+     * @example
+     * // Safe usage in RegExp:
+     * const searchText = "file.txt";
+     * const regex = new RegExp(escapeRegExp(searchText)); // Matches "file.txt" literally
+     */
 
-    function getUTF16LEBytes(char: string): string[] {
-        const bytes = [];
-        for (let i = 0; i < char.length; i++) {
-            const code = char.charCodeAt(i);
-            bytes.push(code & 0xff);
-            bytes.push((code >> 8) & 0xff);
-        }
-        return Array.from(new Uint8Array(bytes)).map((b) => b.toString(16).toUpperCase().padStart(2, "0"));
+    function escapeRegExp(string: string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
 
     const OptionBlock = ({
@@ -304,8 +186,8 @@ const Converter: React.FC<Props> = (props) => {
     };
 
     return (
-        <div className="flex w-screen max-w-6xl flex-col items-center justify-center">
-            <div className="flex w-full flex-row gap-4">
+        <div className="flex w-screen max-w-6xl flex-col items-center justify-center px-4">
+            <div className="flex w-full max-w-4xl flex-col gap-4 lg:flex-row">
                 <div className="flex w-full flex-col">
                     <div className="flex flex-row items-center">
                         <p className="mb-2 text-xl font-semibold">Input</p>
@@ -345,7 +227,7 @@ const Converter: React.FC<Props> = (props) => {
                 <div>
                     <p className="mb-2 text-center text-xl">Options</p>
                 </div>
-                <div className="flex w-full flex-row gap-8">
+                <div className="flex w-full flex-col gap-8 lg:flex-row">
                     <div className="flex flex-col">
                         <div className="flex flex-col">
                             {Object.keys(blocks).map((key) => (
@@ -356,6 +238,7 @@ const Converter: React.FC<Props> = (props) => {
                                     }
                                     description={LettersDisplay[key as keyof typeof Letters]["description"]}
                                     block={key as keyof typeof blocks}
+                                    key={key}
                                 ></OptionBlock>
                             ))}
                         </div>
@@ -381,7 +264,7 @@ const Converter: React.FC<Props> = (props) => {
                     </div>
                 </div>
 
-                <div className="flex w-full flex-row gap-4">
+                <div className="mt-4 flex w-full flex-col gap-2 lg:flex-row lg:gap-4">
                     <button
                         onClick={() => {
                             let allOriginalChars: string[] = [];
@@ -401,9 +284,9 @@ const Converter: React.FC<Props> = (props) => {
                             setInput(result);
                             convertText(result);
                         }}
-                        className="mt-4 w-full cursor-pointer rounded-md border-2 border-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-neutral-700"
+                        className="w-full cursor-pointer rounded-md border-2 border-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-neutral-700"
                     >
-                        Test spoofable characters
+                        Test all spoofable characters
                     </button>
                     <button
                         onClick={() => {
@@ -424,13 +307,13 @@ const Converter: React.FC<Props> = (props) => {
                             setInput(result);
                             convertText(result);
                         }}
-                        className="mt-4 w-full cursor-pointer rounded-md border-2 border-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-neutral-700"
+                        className="w-full cursor-pointer rounded-md border-2 border-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-neutral-700"
                     >
-                        Test non-spoofable characters
+                        Test all non-spoofable characters
                     </button>
                     <button
                         onClick={() => convertText(input)}
-                        className="mt-4 w-full cursor-pointer rounded-md bg-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-blue-800"
+                        className="w-full cursor-pointer rounded-md bg-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-blue-800"
                     >
                         Convert
                     </button>
@@ -438,62 +321,58 @@ const Converter: React.FC<Props> = (props) => {
             </div>
 
             <div
-                className={`mt-4 flex w-xl flex-row items-center rounded-lg bg-amber-600 p-4 ${!warnLetters && "hidden"}`}
+                className={`mt-4 flex w-full max-w-screen flex-row items-center rounded-lg bg-amber-600 p-4 lg:max-w-xl ${!warnLetters && "hidden"}`}
             >
                 <FaTriangleExclamation className="mr-2 text-xl"></FaTriangleExclamation>
                 <p>No letters were replaced</p>
             </div>
-            <table
-                className={`mt-4 w-xl table-fixed border-collapse border-2 border-neutral-600 ${replacements.length == 0 && "hidden"}`}
-            >
-                <thead className="h-8 bg-neutral-700 text-white">
-                    <tr>
-                        <th className="w-20 border border-neutral-600">Base</th>
-                        <th className="w-20 border border-neutral-600">Alt</th>
-                        <th className="w-auto min-w-16 border border-neutral-600">Code</th>
-                        <th className="w-auto min-w-18 border border-neutral-600">UTF-8</th>
-                        <th className="w-auto min-w-18 border border-neutral-600">UTF-16</th>
-                        <th className="border border-neutral-600">Block</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {replacements.map((replacement, index) => (
-                        <tr key={index} className="h-10">
-                            <td className="border border-neutral-600 text-center">
-                                <span className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
-                                    {replacement.original}
-                                </span>
-                            </td>
-                            <td className="border border-neutral-600 text-center">
-                                <span className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
-                                    {replacement.modified}
-                                </span>
-                            </td>
-                            <td className="border border-neutral-600 text-center">
-                                <span className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
-                                    {replacement.codePointHex}
-                                </span>
-                            </td>
-                            <td className="border border-neutral-600 text-center">
-                                {replacement.utf8.map((byte, i) => (
-                                    <span key={i} className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
-                                        {byte}
-                                    </span>
-                                ))}
-                            </td>
-                            <td className="border border-neutral-600 text-center">
-                                {replacement.utf16le.map((byte, i) => (
-                                    <span key={i} className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
-                                        {byte}
-                                    </span>
-                                ))}
-                            </td>
-                            <td className="border border-neutral-600 text-center">{replacement.block}</td>
+            <div className={`mt-4 flex w-full overflow-auto lg:max-w-2xl ${replacements.length == 0 && "hidden"}`}>
+                <table className="min-w-full table-auto border-collapse overflow-auto border-2 border-neutral-600 lg:w-xl">
+                    <thead className="h-8 bg-neutral-700 text-white">
+                        <tr>
+                            <th className="border-neutral-600 lg:w-20">Base</th>
+                            <th className="border-neutral-600 lg:w-20">Alt</th>
+                            <th className="w-auto min-w-16 border border-neutral-600">Code</th>
+                            <th className="w-auto min-w-18 border border-neutral-600">UTF-8</th>
+                            <th className="w-auto min-w-18 border border-neutral-600">UTF-16</th>
+                            <th className="border border-neutral-600">Block</th>
                         </tr>
-                    ))}
-                </tbody>
-                <tfoot></tfoot>
-            </table>
+                    </thead>
+                    <tbody>
+                        {replacements.map((replacement, index) => (
+                            <tr key={index} className="h-10">
+                                <td className="border border-neutral-600 text-center">
+                                    <span className="font-symbola mx-0.5 px-1 text-2xl">{replacement.original}</span>
+                                </td>
+                                <td className="border border-neutral-600 text-center">
+                                    <span className="font-symbola mx-0.5 px-1 text-2xl">{replacement.modified}</span>
+                                </td>
+                                <td className="border border-neutral-600 text-center">
+                                    <span className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
+                                        {replacement.codePointHex}
+                                    </span>
+                                </td>
+                                <td className="border border-neutral-600 text-center">
+                                    {replacement.utf8.map((byte, i) => (
+                                        <span key={i} className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
+                                            {byte}
+                                        </span>
+                                    ))}
+                                </td>
+                                <td className="border border-neutral-600 text-center">
+                                    {replacement.utf16le.map((byte, i) => (
+                                        <span key={i} className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
+                                            {byte}
+                                        </span>
+                                    ))}
+                                </td>
+                                <td className="border border-neutral-600 text-center">{replacement.block}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            </div>
             {/* <div className="mt-4 flex flex-row items-center gap-2"> // TODO
                 <button
                     onClick={() => convertText(input)}

@@ -14,13 +14,11 @@ const { page } = Astro.props;
 
 <Head />
 <Body>
-    <header></header>
-
-    <main>
+    <header class="px-4">
         <div class="my-12 flex flex-col items-center justify-center">
-            <h1 class="text-3xl font-bold text-blue-500">Unicode Spoofer</h1>
-            <p class="mt-2">Replaces regular letters with visually similar alternatives</p>
-            <!-- <div class="mt-4 flex flex-row justify-center"> // TODO
+            <h1 class="mt-2 text-center text-3xl font-bold text-blue-500">Unicode Spoofer</h1>
+            <p class="mt-2 text-center">Replaces regular letters with visually similar alternatives</p>
+            <div class="mt-4 flex flex-row justify-center">
                 <a
                     class="mx-1 rounded-lg border-2 border-neutral-600 bg-neutral-800 px-3 py-0.5 transition-colors duration-150 hover:bg-neutral-600"
                     class:list={[{ "!bg-neutral-600": page == "converter" }]}
@@ -31,13 +29,18 @@ const { page } = Astro.props;
                     class:list={[{ "!bg-neutral-600": page == "characters" }]}
                     href="/characters">Character List</a
                 >
+                <!-- TODO
                 <a
                     class="mx-1 rounded-lg border-2 border-neutral-600 bg-neutral-800 px-3 py-0.5 transition-colors duration-150 hover:bg-neutral-600"
                     class:list={[{ "!bg-neutral-600": page == "about" }]}
-                    href="/about">About</a
-                >
-            </div> -->
+                    href="/about">About
+                </a> 
+                -->
+            </div>
         </div>
+    </header>
+
+    <main>
         <slot />
     </main>
 
