@@ -3,6 +3,17 @@
 @import "tailwindcss";
 
 @theme {
-    --font-symbola: 'Symbola', serif;
+    /* WHY DOES TAILWIND KEEP FUCKING THIS UP */
+    --font-symbola: 'Symbola';
     --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Create explicit utility classes */
+:root {
+  .font-symbola {
+    font-family: var(--font-symbola);
+  }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
 }
