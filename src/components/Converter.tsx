@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaCopy, FaRegCopy, FaTriangleExclamation } from "react-icons/fa6";
 
-export const Letters = {
+const Letters = {
     uppercase: [
         { original: "A", modified: "А", block: "Cyrillic" },
         { original: "B", modified: "В", block: "Cyrillic" },
@@ -334,8 +334,8 @@ const Converter: React.FC<Props> = (props) => {
     };
 
     return (
-        <div className="flex w-screen max-w-6xl flex-col items-center justify-center">
-            <div className="flex w-full flex-row gap-4">
+        <div className="flex w-screen max-w-6xl flex-col items-center justify-center px-4">
+            <div className="flex w-full max-w-4xl flex-col gap-4 lg:flex-row">
                 <div className="flex w-full flex-col">
                     <div className="flex flex-row items-center">
                         <p className="mb-2 text-xl font-semibold">Input</p>
@@ -375,7 +375,7 @@ const Converter: React.FC<Props> = (props) => {
                 <div>
                     <p className="mb-2 text-center text-xl">Options</p>
                 </div>
-                <div className="flex w-full flex-row gap-8">
+                <div className="flex w-full flex-col gap-8 lg:flex-row">
                     <div className="flex flex-col">
                         <div className="flex flex-col">
                             {Object.keys(blocks).map((key) => (
@@ -386,6 +386,7 @@ const Converter: React.FC<Props> = (props) => {
                                     }
                                     description={LettersDisplay[key as keyof typeof Letters]["description"]}
                                     block={key as keyof typeof blocks}
+                                    key={key}
                                 ></OptionBlock>
                             ))}
                         </div>
@@ -411,7 +412,7 @@ const Converter: React.FC<Props> = (props) => {
                     </div>
                 </div>
 
-                <div className="flex w-full flex-row gap-4">
+                <div className="mt-4 flex w-full flex-col gap-2 lg:flex-row lg:gap-4">
                     <button
                         onClick={() => {
                             let allOriginalChars: string[] = [];
@@ -431,9 +432,9 @@ const Converter: React.FC<Props> = (props) => {
                             setInput(result);
                             convertText(result);
                         }}
-                        className="mt-4 w-full cursor-pointer rounded-md border-2 border-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-neutral-700"
+                        className="w-full cursor-pointer rounded-md border-2 border-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-neutral-700"
                     >
-                        Test spoofable characters
+                        Test all spoofable characters
                     </button>
                     <button
                         onClick={() => {
@@ -454,13 +455,13 @@ const Converter: React.FC<Props> = (props) => {
                             setInput(result);
                             convertText(result);
                         }}
-                        className="mt-4 w-full cursor-pointer rounded-md border-2 border-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-neutral-700"
+                        className="w-full cursor-pointer rounded-md border-2 border-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-neutral-700"
                     >
-                        Test non-spoofable characters
+                        Test all non-spoofable characters
                     </button>
                     <button
                         onClick={() => convertText(input)}
-                        className="mt-4 w-full cursor-pointer rounded-md bg-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-blue-800"
+                        className="w-full cursor-pointer rounded-md bg-blue-600 px-4 py-2 transition-colors duration-150 hover:bg-blue-800"
                     >
                         Convert
                     </button>
@@ -468,18 +469,18 @@ const Converter: React.FC<Props> = (props) => {
             </div>
 
             <div
-                className={`mt-4 flex w-xl flex-row items-center rounded-lg bg-amber-600 p-4 ${!warnLetters && "hidden"}`}
+                className={`mt-4 flex w-full max-w-screen flex-row items-center rounded-lg bg-amber-600 p-4 lg:max-w-xl ${!warnLetters && "hidden"}`}
             >
                 <FaTriangleExclamation className="mr-2 text-xl"></FaTriangleExclamation>
                 <p>No letters were replaced</p>
             </div>
             <table
-                className={`mt-4 w-xl table-fixed border-collapse border-2 border-neutral-600 ${replacements.length == 0 && "hidden"}`}
+                className={`mt-4 w-full table-fixed border-collapse border-2 border-neutral-600 lg:w-xl ${replacements.length == 0 && "hidden"}`}
             >
                 <thead className="h-8 bg-neutral-700 text-white">
                     <tr>
-                        <th className="w-20 border border-neutral-600">Base</th>
-                        <th className="w-20 border border-neutral-600">Alt</th>
+                        <th className="border-neutral-600 lg:w-20">Base</th>
+                        <th className="border-neutral-600 lg:w-20">Alt</th>
                         <th className="w-auto min-w-16 border border-neutral-600">Code</th>
                         <th className="w-auto min-w-18 border border-neutral-600">UTF-8</th>
                         <th className="w-auto min-w-18 border border-neutral-600">UTF-16</th>
