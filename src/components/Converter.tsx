@@ -237,7 +237,9 @@ const Converter: React.FC<Props> = (props) => {
                 <div className="flex w-full flex-col">
                     <div className="flex flex-row items-center">
                         <p className="mb-2 text-xl font-semibold">Output</p>
-                        <p className={`ml-2 text-sm text-neutral-500 ${replacements.length == 0 && "hidden"}`}>
+                        <p
+                            className={`ml-2 text-sm ${inputStats.total == 0 && "hidden"} ${replacements.length == 0 ? "text-amber-500" : "text-neutral-500"}`}
+                        >
                             {totalSpoofedCount} characters spoofed | {replacements.length} unique characters spoofed
                         </p>
                     </div>
@@ -249,7 +251,7 @@ const Converter: React.FC<Props> = (props) => {
                     ></textarea>
                 </div>
             </div>
-            <div className="mt-4 flex w-full max-w-4xl flex-col rounded-lg border-2 border-neutral-600 p-4">
+            <div className="mt-4 flex w-full max-w-4xl flex-col rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
                 <div>
                     <p className="mb-2 text-center text-xl">Options</p>
                 </div>
@@ -358,12 +360,12 @@ const Converter: React.FC<Props> = (props) => {
             </div>
 
             <div
-                className={`mt-4 flex w-full max-w-screen flex-row items-center rounded-lg bg-amber-600 p-4 lg:max-w-xl ${!warnLetters && "hidden"}`}
+                className={`b mt-4 flex w-full max-w-screen flex-row items-center rounded-lg border-2 border-amber-500 bg-amber-600 p-4 lg:max-w-4xl ${!warnLetters && "hidden"}`}
             >
                 <FaTriangleExclamation className="mr-2 text-xl"></FaTriangleExclamation>
                 <p>No letters were replaced</p>
             </div>
-            <div className={`mt-4 flex w-full overflow-auto lg:max-w-2xl ${replacements.length == 0 && "hidden"}`}>
+            <div className={`mt-4 flex w-full overflow-auto lg:max-w-4xl ${replacements.length == 0 && "hidden"}`}>
                 <table className="min-w-full table-auto border-collapse overflow-auto border-2 border-neutral-600 lg:w-xl">
                     <thead className="h-8 bg-neutral-700 text-white">
                         <tr>
