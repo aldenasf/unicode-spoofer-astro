@@ -326,57 +326,53 @@ const Converter: React.FC<Props> = (props) => {
                 <FaTriangleExclamation className="mr-2 text-xl"></FaTriangleExclamation>
                 <p>No letters were replaced</p>
             </div>
-            <table
-                className={`mt-4 w-full table-fixed border-collapse border-2 border-neutral-600 lg:w-xl ${replacements.length == 0 && "hidden"}`}
-            >
-                <thead className="h-8 bg-neutral-700 text-white">
-                    <tr>
-                        <th className="border-neutral-600 lg:w-20">Base</th>
-                        <th className="border-neutral-600 lg:w-20">Alt</th>
-                        <th className="w-auto min-w-16 border border-neutral-600">Code</th>
-                        <th className="w-auto min-w-18 border border-neutral-600">UTF-8</th>
-                        <th className="w-auto min-w-18 border border-neutral-600">UTF-16</th>
-                        <th className="border border-neutral-600">Block</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {replacements.map((replacement, index) => (
-                        <tr key={index} className="h-10">
-                            <td className="border border-neutral-600 text-center">
-                                <span className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
-                                    {replacement.original}
-                                </span>
-                            </td>
-                            <td className="border border-neutral-600 text-center">
-                                <span className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
-                                    {replacement.modified}
-                                </span>
-                            </td>
-                            <td className="border border-neutral-600 text-center">
-                                <span className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
-                                    {replacement.codePointHex}
-                                </span>
-                            </td>
-                            <td className="border border-neutral-600 text-center">
-                                {replacement.utf8.map((byte, i) => (
-                                    <span key={i} className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
-                                        {byte}
-                                    </span>
-                                ))}
-                            </td>
-                            <td className="border border-neutral-600 text-center">
-                                {replacement.utf16le.map((byte, i) => (
-                                    <span key={i} className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
-                                        {byte}
-                                    </span>
-                                ))}
-                            </td>
-                            <td className="border border-neutral-600 text-center">{replacement.block}</td>
+            <div className={`mt-4 flex w-full overflow-auto lg:max-w-2xl ${replacements.length == 0 && "hidden"}`}>
+                <table className="min-w-full table-auto border-collapse overflow-auto border-2 border-neutral-600 lg:w-xl">
+                    <thead className="h-8 bg-neutral-700 text-white">
+                        <tr>
+                            <th className="border-neutral-600 lg:w-20">Base</th>
+                            <th className="border-neutral-600 lg:w-20">Alt</th>
+                            <th className="w-auto min-w-16 border border-neutral-600">Code</th>
+                            <th className="w-auto min-w-18 border border-neutral-600">UTF-8</th>
+                            <th className="w-auto min-w-18 border border-neutral-600">UTF-16</th>
+                            <th className="border border-neutral-600">Block</th>
                         </tr>
-                    ))}
-                </tbody>
-                <tfoot></tfoot>
-            </table>
+                    </thead>
+                    <tbody>
+                        {replacements.map((replacement, index) => (
+                            <tr key={index} className="h-10">
+                                <td className="border border-neutral-600 text-center">
+                                    <span className="font-symbola mx-0.5 px-1 text-2xl">{replacement.original}</span>
+                                </td>
+                                <td className="border border-neutral-600 text-center">
+                                    <span className="font-symbola mx-0.5 px-1 text-2xl">{replacement.modified}</span>
+                                </td>
+                                <td className="border border-neutral-600 text-center">
+                                    <span className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
+                                        {replacement.codePointHex}
+                                    </span>
+                                </td>
+                                <td className="border border-neutral-600 text-center">
+                                    {replacement.utf8.map((byte, i) => (
+                                        <span key={i} className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
+                                            {byte}
+                                        </span>
+                                    ))}
+                                </td>
+                                <td className="border border-neutral-600 text-center">
+                                    {replacement.utf16le.map((byte, i) => (
+                                        <span key={i} className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
+                                            {byte}
+                                        </span>
+                                    ))}
+                                </td>
+                                <td className="border border-neutral-600 text-center">{replacement.block}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            </div>
             {/* <div className="mt-4 flex flex-row items-center gap-2"> // TODO
                 <button
                     onClick={() => convertText(input)}
