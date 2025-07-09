@@ -1,6 +1,8 @@
 @import url('https://fontlibrary.org/face/symbola');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 @import "tailwindcss";
 
 @theme {
-    --font-symbola: 'Symbola', sans-serif;
+    --font-symbola: 'Symbola', serif;
+    --font-jetbrainsmono: "JetBrains Mono", monospace;
 }
