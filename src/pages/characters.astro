@@ -1,5 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CharactersComponent from "../components/Characters";
 ---
 
-<Layout page="characters"> characters </Layout>
+<Layout page="characters">
+    <section class="flex flex-col items-center justify-center">
+        <CharactersComponent client:load />
+    </section>
+</Layout>
