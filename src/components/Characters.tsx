@@ -115,8 +115,8 @@ const Characters = () => {
                 <div className="mt-4 flex flex-row items-center gap-3 rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
                     <p className="text-lg font-semibold">Fonts</p>
                     <div className="flex flex-row gap-2 overflow-x-auto text-nowrap">
-                        <FontSelectorInput name="serif" displayText="Sans Serif"></FontSelectorInput>
-                        <FontSelectorInput name="sans" displayText="Sans"></FontSelectorInput>
+                        <FontSelectorInput name="serif" displayText="Serif"></FontSelectorInput>
+                        <FontSelectorInput name="sans" displayText="Sans Serif"></FontSelectorInput>
                         <FontSelectorInput name="mono" displayText="Monospace"></FontSelectorInput>
                         <FontSelectorInput name="symbola" displayText="Symbola"></FontSelectorInput>
                     </div>
