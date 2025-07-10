@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
+import { FaGithub, FaArrowRight } from "react-icons/fa6";
 import { Letters, LettersDisplay, getCodePointHex, getUTF16LEBytes, getUTF8Bytes } from "../scripts/letters";
 const Characters = () => {
-    type Font = "sans" | "symbola" | "mono";
+    type Font = "sans" | "symbola" | "mono" | "serif";
 
     const [font, setFont] = useState<Font>("symbola");
     const [isSticky, setIsSticky] = useState(false);
@@ -54,10 +55,10 @@ const Characters = () => {
         );
     };
     return (
-        <div className="flex flex-col">
+        <div className="flex max-w-screen flex-col px-4">
             {/* Background that appears when sticky */}
             <div
-                className={`fixed top-0 right-0 left-0 z-10 h-40 backdrop-blur-xs transition-opacity duration-150 ${isSticky ? "opacity-100" : "hidden opacity-0"}`}
+                className={`pointer-events-none fixed top-0 right-0 left-0 z-10 h-40 max-w-screen backdrop-blur-xs transition-opacity duration-150 ${isSticky ? "opacity-100" : "opacity-0"}`}
                 style={{
                     backdropFilter: `
                         blur(0px) 
@@ -95,13 +96,28 @@ const Characters = () => {
                     `,
                 }}
             ></div>
-            <div ref={stickyRef} className="sticky top-0 z-20 w-full p-4 lg:px-0">
-                <div className="flex flex-row items-center gap-3 rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
+            <div className="w-full lg:px-0">
+                <a
+                    href="https://github.com/aldenasf/unicode-spoofer-astro/blob/HEAD/src/scripts/letters.ts"
+                    className="flex w-full flex-row items-center justify-between rounded-lg border-2 border-blue-600 bg-blue-800 p-4 transition-colors duration-150 hover:bg-blue-600"
+                >
+                    <span className="flex flex-row items-center">
+                        <FaGithub className="mr-2 text-2xl"></FaGithub>
+                        <span>Contribute to this list</span>
+                    </span>
+                    <span className="flex flex-row items-center">
+                        <FaArrowRight className="text-xl"></FaArrowRight>
+                    </span>
+                </a>
+            </div>
+            <div ref={stickyRef} className="sticky top-0 z-20 w-full max-w-screen">
+                <div className="mt-4 flex flex-row items-center gap-3 rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
                     <p className="text-lg font-semibold">Fonts</p>
-                    <div className="flex flex-row gap-2">
-                        <FontSelectorInput name="symbola" displayText="Sans Serif"></FontSelectorInput>
+                    <div className="flex flex-row gap-2 overflow-x-auto text-nowrap">
+                        <FontSelectorInput name="serif" displayText="Sans Serif"></FontSelectorInput>
                         <FontSelectorInput name="sans" displayText="Sans"></FontSelectorInput>
                         <FontSelectorInput name="mono" displayText="Monospace"></FontSelectorInput>
+                        <FontSelectorInput name="symbola" displayText="Symbola"></FontSelectorInput>
                     </div>
                 </div>
             </div>
