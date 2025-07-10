@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { FaGithub, FaArrowRight } from "react-icons/fa6";
+import { GITHUB_REPO_URL } from "../constants";
 import { Letters, LettersDisplay, getCodePointHex, getUTF16LEBytes, getUTF8Bytes } from "../scripts/letters";
 const Characters = () => {
     type Font = "sans" | "symbola" | "mono" | "serif";
@@ -98,7 +99,7 @@ const Characters = () => {
             ></div>
             <div className="w-full lg:px-0">
                 <a
-                    href="https://github.com/aldenasf/unicode-spoofer-astro/blob/HEAD/src/scripts/letters.ts"
+                    href={`${GITHUB_REPO_URL}/blob/HEAD/src/scripts/letters.ts`}
                     className="flex w-full flex-row items-center justify-between rounded-lg border-2 border-blue-600 bg-blue-800 p-4 transition-colors duration-150 hover:bg-blue-600"
                 >
                     <span className="flex flex-row items-center">

@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import { GITHUB_REPO_URL } from "../constants";
 ---
 
 <footer class="flex flex-col items-center bg-neutral-900 py-12">
@@ -7,8 +8,7 @@ import { Icon } from "astro-icon/components";
     <div class="flex flex-row">
         <a
             class="flex flex-row items-center text-center underline duration-150 ease-in-out hover:text-blue-300"
-            href="https://github.com/aldenasf/unicode-spoofer-astro"
-            ><Icon class="mr-1 text-lg" name="fa6-brands:github" />Source</a
+            href={GITHUB_REPO_URL}><Icon class="mr-1 text-lg" name="fa6-brands:github" />Source</a
         ><span class="mx-2">∙</span>
         <a>GPL v3</a>
     </div>
