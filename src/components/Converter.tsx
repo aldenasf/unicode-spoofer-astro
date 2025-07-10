@@ -7,7 +7,6 @@ interface Props {
 }
 
 const Converter: React.FC<Props> = (props) => {
-    const [font, setFont] = useState<Font>("sans");
     const [input, setInput] = useState(props.initialInput || "");
     const [output, setOutput] = useState("");
     const [replacements, setReplacements] = useState<
@@ -42,7 +41,9 @@ const Converter: React.FC<Props> = (props) => {
         }
     }, []);
 
-    type Font = "sans" | "symbola" | "mono";
+    type Font = "sans" | "symbola" | "mono" | "serif";
+
+    const [font, setFont] = useState<Font>("sans");
 
     function convertText(inputText: string, settingsOverwrite?: typeof settings, blocksOverwrite?: typeof blocks) {
         let localReplacements: typeof replacements = [];
@@ -251,6 +252,19 @@ const Converter: React.FC<Props> = (props) => {
                     ></textarea>
                 </div>
             </div>
+
+            <div className="mt-4 w-full max-w-4xl lg:px-0">
+                <div className="flex flex-row items-center gap-3 rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
+                    <p className="text-lg font-semibold">Fonts</p>
+                    <div className="flex flex-row gap-2 overflow-x-auto text-nowrap">
+                        <FontSelectorInput name="serif" displayText="Sans Serif"></FontSelectorInput>
+                        <FontSelectorInput name="sans" displayText="Sans"></FontSelectorInput>
+                        <FontSelectorInput name="mono" displayText="Monospace"></FontSelectorInput>
+                        <FontSelectorInput name="symbola" displayText="Symbola"></FontSelectorInput>
+                    </div>
+                </div>
+            </div>
+
             <div className="mt-4 flex w-full max-w-4xl flex-col rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
                 <div>
                     <p className="mb-2 text-center text-xl">Options</p>
@@ -345,17 +359,6 @@ const Converter: React.FC<Props> = (props) => {
                     >
                         Convert
                     </button>
-                </div>
-            </div>
-
-            <div className="mt-4 w-full max-w-4xl lg:px-0">
-                <div className="flex flex-row items-center gap-3 rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
-                    <p className="text-lg font-semibold">Fonts</p>
-                    <div className="flex flex-row gap-2">
-                        <FontSelectorInput name="symbola" displayText="Sans Serif"></FontSelectorInput>
-                        <FontSelectorInput name="sans" displayText="Sans"></FontSelectorInput>
-                        <FontSelectorInput name="mono" displayText="Monospace"></FontSelectorInput>
-                    </div>
                 </div>
             </div>
 
