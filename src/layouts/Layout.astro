@@ -22,20 +22,24 @@ const { page } = Astro.props;
                 <a
                     class="rounded-lg border-2 border-neutral-600 bg-neutral-800 px-3 py-0.5 text-center transition-colors duration-150 hover:bg-neutral-600"
                     class:list={[{ "!bg-neutral-600": page == "converter" }]}
-                    href="/">Converter</a
+                    href="/"
                 >
+                    <span>Converter</span>
+                </a>
                 <a
                     class="rounded-lg border-2 border-neutral-600 bg-neutral-800 px-3 py-0.5 text-center transition-colors duration-150 hover:bg-neutral-600"
                     class:list={[{ "!bg-neutral-600": page == "characters" }]}
-                    href="/characters">Character List</a
+                    href="/characters"
                 >
-                <!-- TODO
+                    <span>Character List</span>
+                </a>
                 <a
                     class="rounded-lg border-2 border-neutral-600 bg-neutral-800 px-3 py-0.5 text-center transition-colors duration-150 hover:bg-neutral-600"
                     class:list={[{ "!bg-neutral-600": page == "about" }]}
-                    href="/about">About
-                </a> 
-                -->
+                    href="/about"
+                >
+                    <span>About</span>
+                </a>
             </div>
         </div>
     </header>

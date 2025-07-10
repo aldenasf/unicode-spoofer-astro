@@ -2,4 +2,74 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout page="about"> about </Layout>
+<Layout page="about">
+    <section class="flex flex-col items-center px-4">
+        <div class="flex max-w-xl flex-col items-center gap-4 text-center">
+            <p>
+                This project was inspired by a YouTube video made by ThioJoe:
+                <br />
+                <a class="text-blue-500" href="https://youtu.be/hF1bIT1ym4g?t=249"
+                    >How to Spot Any Spoofed & Fake Email (Ultimate Guide)</a
+                >
+            </p>
+
+            <p>
+                This project is a successor to the original <a
+                    class="text-blue-500"
+                    href="https://github.com/aldenasf/unicode-spoofer">unicode-spoofer</a
+                > project hosted on GitHub Pages <a
+                    class="text-blue-500"
+                    href="https://aldenasf.github.io/unicode-spoofer/">here</a
+                >.
+            </p>
+
+            <div class="mt-8">
+                <p>Powered by</p>
+                <div class="mt-2 flex flex-row flex-wrap items-center justify-center gap-2">
+                    <a href="https://astro.build/" title="Astro" class="m-1 size-10"
+                        ><img
+                            src="https://astro.build/assets/press/astro-icon-light-gradient.svg"
+                            alt="Astro"
+                            class="size-10"
+                        /></a
+                    >
+                    <a href="https://react.dev/" title="React" class="m-1 size-10"
+                        ><img
+                            src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+                            alt="React"
+                            class="size-10"
+                        /></a
+                    >
+                    <a href="https://tailwindcss.com/" title="Tailwind CSS" class="m-1 size-10"
+                        ><img
+                            src="https://tailwindcss.com/_next/static/media/tailwindcss-mark.d52e9897.svg"
+                            alt="Tailwind CSS"
+                            class="size-10"
+                        /></a
+                    >
+                    <a href="https://www.astroicon.dev/" title="Astro Icon" class="m-1 size-10"
+                        ><img src="https://www.astroicon.dev/favicon.svg" alt="Astro Icon" class="size-10" /></a
+                    >
+                    <a href="https://react-icons.github.io/react-icons/" title="React Icons" class="m-1 size-10"
+                        ><img
+                            src="https://react-icons.github.io/react-icons/favicon.png"
+                            alt="Astro"
+                            class="size-10"
+                        /></a
+                    >
+                    <a href="https://vercel.com/" title="Vercel" class="m-1 size-10"
+                        ><svg
+                            aria-label="Vercel"
+                            height="64"
+                            role="img"
+                            viewBox="0 0 74 64"
+                            style="width: auto; overflow: visible;"
+                            class="size-8"
+                            ><path d="M37.5896 0.25L74.5396 64.25H0.639648L37.5896 0.25Z" fill="white"></path></svg
+                        ></a
+                    >
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>
