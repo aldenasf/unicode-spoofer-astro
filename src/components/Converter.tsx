@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { FaCopy, FaRegCopy, FaTriangleExclamation } from "react-icons/fa6";
-import { Letters, LettersDisplay, getCodePointHex, getUTF8Bytes, getUTF16LEBytes } from "../scripts/letters";
+import { getCodePointHex, getUTF8Bytes, getUTF16LEBytes } from "../scripts/letters_utilities";
+import { Letters, LettersDisplay } from "../scripts/letters";
+import type { CharacterAlternative } from "../scripts/letters";
 
 interface Props {
     initialInput?: string;
 }
 
+interface Replacement extends CharacterAlternative {
+    utf8: string[];
+    utf16le: string[];
+    codePointHex: string;
+}
+
 const Converter: React.FC<Props> = (props) => {
     const [input, setInput] = useState(props.initialInput || "");
     const [output, setOutput] = useState("");
-    const [replacements, setReplacements] = useState<
-        {
-            original: string;
-            modified: string;
-            block: string;
-            utf8: string[];
-            utf16le: string[];
-            codePointHex: string;
-        }[]
-    >([]);
+    const [replacements, setReplacements] = useState<Replacement[]>([]);
     const [blocks, setBlocks] = useState({
         uppercase: true,
         lowercase: true,
@@ -59,17 +58,17 @@ const Converter: React.FC<Props> = (props) => {
         const activeLetters = Object.keys(Letters)
             .filter((key) => localBlocks[key as keyof typeof Letters]) // Only include categories enabled in settings
             .flatMap((key) => Letters[key as keyof typeof Letters]) // Get all letter arrays for enabled categories
-            .filter((l) => l.modified.length > 0); // Filter out empty modified characters
+            .filter((l) => l.alt.length > 0); // Filter out empty alt characters
 
         activeLetters.forEach((letter) => {
-            if (result.includes(letter.original)) {
-                const occurrences = (result.match(new RegExp(escapeRegExp(letter.original), "g")) || []).length;
+            if (result.includes(letter.base)) {
+                const occurrences = (result.match(new RegExp(escapeRegExp(letter.base), "g")) || []).length;
                 totalCount += occurrences;
-                result = result.replaceAll(letter.original, letter.modified);
+                result = result.replaceAll(letter.base, letter.alt);
 
-                const utf8 = getUTF8Bytes(letter.modified);
-                const utf16le = getUTF16LEBytes(letter.modified);
-                const codePointHex = getCodePointHex(letter.modified);
+                const utf8 = getUTF8Bytes(letter.alt);
+                const utf16le = getUTF16LEBytes(letter.alt);
+                const codePointHex = getCodePointHex(letter.alt);
 
                 localReplacements.push({ ...letter, utf8, utf16le, codePointHex });
             }
@@ -314,8 +313,8 @@ const Converter: React.FC<Props> = (props) => {
                                 allOriginalChars = [
                                     ...allOriginalChars,
                                     ...Letters[key as keyof typeof Letters].map((item) => {
-                                        if (item.modified.length) {
-                                            return item.original;
+                                        if (item.alt.length) {
+                                            return item.base;
                                         } else {
                                             return "";
                                         }
@@ -337,8 +336,8 @@ const Converter: React.FC<Props> = (props) => {
                                 allOriginalChars = [
                                     ...allOriginalChars,
                                     ...Letters[key as keyof typeof Letters].map((item) => {
-                                        if (!item.modified.length) {
-                                            return item.original;
+                                        if (!item.alt.length) {
+                                            return item.base;
                                         } else {
                                             return "";
                                         }
@@ -384,10 +383,10 @@ const Converter: React.FC<Props> = (props) => {
                         {replacements.map((replacement, index) => (
                             <tr key={index} className="h-10">
                                 <td className="border border-neutral-600 text-center">
-                                    <span className={`font-${font} mx-0.5 px-1 text-2xl`}>{replacement.original}</span>
+                                    <span className={`font-${font} mx-0.5 px-1 text-2xl`}>{replacement.base}</span>
                                 </td>
                                 <td className="border border-neutral-600 text-center">
-                                    <span className={`font-${font} mx-0.5 px-1 text-2xl`}>{replacement.modified}</span>
+                                    <span className={`font-${font} mx-0.5 px-1 text-2xl`}>{replacement.alt}</span>
                                 </td>
                                 <td className="border border-neutral-600 text-center">
                                     <span className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">

@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { FaGithub, FaArrowRight } from "react-icons/fa6";
 import { GITHUB_REPO_URL } from "../constants";
-import { Letters, LettersDisplay, getCodePointHex, getUTF16LEBytes, getUTF8Bytes } from "../scripts/letters";
+import { Letters } from "../scripts/letters";
+import { getCodePointHex, getUTF8Bytes, getUTF16LEBytes } from "../scripts/letters_utilities";
 const Characters = () => {
     type Font = "sans" | "symbola" | "mono" | "serif";
 
@@ -137,29 +138,29 @@ const Characters = () => {
                     <tbody>
                         {Object.keys(Letters).map((key, index1) =>
                             Letters[key as keyof typeof Letters].map((letter, index2) => (
-                                <tr key={index1 + index2} className={`h-10 ${!letter.modified && "bg-red-950"}`}>
+                                <tr key={index1 + index2} className={`h-10 ${!letter.alt && "bg-red-950"}`}>
                                     <td className="border border-neutral-600 text-center">
-                                        <span className={`mx-0.5 px-1 text-2xl font-${font}`}>{letter.original}</span>
+                                        <span className={`mx-0.5 px-1 text-2xl font-${font}`}>{letter.base}</span>
                                     </td>
                                     <td className="border border-neutral-600 text-center">
-                                        <span className={`mx-0.5 px-1 text-2xl font-${font}`}>{letter.modified}</span>
+                                        <span className={`mx-0.5 px-1 text-2xl font-${font}`}>{letter.alt}</span>
                                     </td>
                                     <td className="border border-neutral-600 text-center">
                                         <span className="mx-0.5 px-1 font-mono text-rose-400">
-                                            {letter.modified && getCodePointHex(letter.modified)}
+                                            {letter.alt && getCodePointHex(letter.alt)}
                                         </span>
                                     </td>
                                     <td className="border border-neutral-600 text-center">
-                                        {letter.modified &&
-                                            getUTF8Bytes(letter.modified).map((byte, i) => (
+                                        {letter.alt &&
+                                            getUTF8Bytes(letter.alt).map((byte, i) => (
                                                 <span key={i} className="mx-0.5 px-1 font-mono text-rose-400">
                                                     {byte}
                                                 </span>
                                             ))}
                                     </td>
                                     <td className="border border-neutral-600 text-center">
-                                        {letter.modified &&
-                                            getUTF16LEBytes(letter.modified).map((byte, i) => (
+                                        {letter.alt &&
+                                            getUTF16LEBytes(letter.alt).map((byte, i) => (
                                                 <span key={i} className="mx-0.5 px-1 font-mono text-rose-400">
                                                     {byte}
                                                 </span>
