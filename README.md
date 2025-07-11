@@ -1,52 +1,67 @@
-# Astro Starter Kit: Basics
+[![GitHub License](https://img.shields.io/github/license/aldenasf/unicode-spoofer-astro)](LICENSE)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Funicode-spoofer.vercel.app%2F)](https://unicode-spoofer.vercel.app/)
 
-```sh
-pnpm create astro@latest -- --template basics
+# Unicode Spoofer
+
+A tool that replaces Latin characters with visually similar Unicode alternatives from other scripts (like Cyrillic or Greek). Designed to potentially bypass text detection systems while maintaining human readability.
+
+**Example:**  
+`unicode` → `unісоdе` (notice the Cyrillic 'i', 'c', 'o', and 'e')
+
+> ⚠️ **Disclaimer:**
+>
+> This tool is intended for **educational and research purposes only**. Do **not** use it for malicious, deceptive, or unethical purposes.  
+> The developer is **not responsible for any misuse**. Use at your own risk.
+
+---
+
+## 🚀 Features
+
+- ✅ **Character Substitution** – Replaces characters while preserving readability
+- ✅ **Extensible Database** – Easily add new homoglyph mappings
+- ✅ **Customizable Converter** – Configure:
+    - Which categories of characters to spoof (e.g. uppercase/lowercase letters, numbers, symbols, spaces)
+    - Whether to insert zero-width spaces between characters
+- ✅ **Live Conversion Stats** – Shows number of unique and total characters spoofed
+- ✅ **Developer-Friendly** – TypeScript support and a clean, modular structure
+
+---
+
+## 🛠️ Usage
+
+1. **Paste your text** into the input box  
+   ![Input & Output Textarea](src/assets/screenshots/input-textarea.png)
+
+2. **Configure your converter**  
+   Choose which character categories to spoof and optionally insert zero-width spaces.  
+   ![Options Panel](src/assets/screenshots/options.png)
+
+3. **Copy the output**  
+   Copy the spoofed result with your selected substitutions. See the number of spoofed characters (unique and total displayed above the output.  
+   ![Input & Output Textarea](src/assets/screenshots/output-textarea.png)
+
+4. **View conversion stats**  
+   A table below the options shows the substituted characters:  
+   ![Characters table](src/assets/screenshots/replacement-table.png)
+
+---
+
+## 🧱 Character Database Structure
+
+Substitution rules follow this format:
+
+<!-- prettier-ignore -->
+```typescript
+interface CharacterMapping {
+    base: string;   // Original Latin character (e.g., "A")
+    alt: string;    // Unicode homoglyph (e.g., "А")
+    block: string;  // Unicode block name (e.g., "Cyrillic")
+}
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+---
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🤝 Contributing
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Contributions are welcome!  
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and how to get started.
