@@ -1,15 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import { Letters, LettersDisplay, getCodePointHex, getUTF16LEBytes, getUTF8Bytes } from "../scripts/letters";
+import { FaGithub, FaArrowRight } from "react-icons/fa6";
+import { GITHUB_REPO_URL } from "../constants";
+import { Letters } from "../scripts/letters";
+import { getCodePointHex, getUTF8Bytes, getUTF16LEBytes } from "../scripts/letters_utilities";
 const Characters = () => {
-    const Font = {
-        mono: "mono",
-        sans: "sans",
-        serif: "symbola",
-    };
+    type Font = "sans" | "symbola" | "mono" | "serif";
 
-    type FontType = keyof typeof Font;
-
-    const [font, setFont] = useState<FontType>("serif");
+    const [font, setFont] = useState<Font>("symbola");
     const [isSticky, setIsSticky] = useState(false);
     const stickyRef = useRef<HTMLDivElement>(null);
 
@@ -37,17 +34,17 @@ const Characters = () => {
         };
     }, []);
 
-    const FontSelectorInput = ({ name, displayText }: { name: FontType; displayText: string }) => {
+    const FontSelectorInput = ({ name, displayText }: { name: Font; displayText: string }) => {
         return (
             <label
-                htmlFor={`font-${Font[name]}`}
+                htmlFor={`font-${name}`}
                 className={`flex h-auto w-auto cursor-pointer flex-row rounded-lg border-2 p-2 transition-colors duration-150 hover:border-blue-700 ${font === name ? "border-blue-700" : "border-neutral-600"}`}
             >
                 <span>
                     <input
                         type="radio"
                         name="font"
-                        id={`font-${Font[name]}`}
+                        id={`font-${name}`}
                         className="hidden"
                         checked={font === name}
                         onChange={(e) => {
@@ -60,10 +57,10 @@ const Characters = () => {
         );
     };
     return (
-        <div className="flex flex-col">
+        <div className="flex max-w-screen flex-col px-4">
             {/* Background that appears when sticky */}
             <div
-                className={`fixed top-0 right-0 left-0 z-10 h-40 backdrop-blur-xs transition-opacity duration-150 ${isSticky ? "opacity-100" : "hidden opacity-0"}`}
+                className={`pointer-events-none fixed top-0 right-0 left-0 z-10 h-40 max-w-screen backdrop-blur-xs transition-opacity duration-150 ${isSticky ? "opacity-100" : "opacity-0"}`}
                 style={{
                     backdropFilter: `
                         blur(0px) 
@@ -101,13 +98,28 @@ const Characters = () => {
                     `,
                 }}
             ></div>
-            <div ref={stickyRef} className="sticky top-0 z-20 w-full p-4 lg:px-0">
-                <div className="flex flex-row items-center gap-3 rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
+            <div className="w-full lg:px-0">
+                <a
+                    href={`${GITHUB_REPO_URL}/blob/HEAD/src/scripts/letters.ts`}
+                    className="flex w-full flex-row items-center justify-between rounded-lg border-2 border-blue-600 bg-blue-800 p-4 transition-colors duration-150 hover:bg-blue-600"
+                >
+                    <span className="flex flex-row items-center">
+                        <FaGithub className="mr-2 text-2xl"></FaGithub>
+                        <span>Contribute to this list</span>
+                    </span>
+                    <span className="flex flex-row items-center">
+                        <FaArrowRight className="text-xl"></FaArrowRight>
+                    </span>
+                </a>
+            </div>
+            <div ref={stickyRef} className="sticky top-0 z-20 w-full max-w-screen">
+                <div className="mt-4 flex flex-row items-center gap-3 rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
                     <p className="text-lg font-semibold">Fonts</p>
-                    <div className="flex flex-row gap-2">
-                        <FontSelectorInput name="serif" displayText="Sans Serif"></FontSelectorInput>
-                        <FontSelectorInput name="sans" displayText="Sans"></FontSelectorInput>
+                    <div className="flex flex-row gap-2 overflow-x-auto text-nowrap">
+                        <FontSelectorInput name="serif" displayText="Serif"></FontSelectorInput>
+                        <FontSelectorInput name="sans" displayText="Sans Serif"></FontSelectorInput>
                         <FontSelectorInput name="mono" displayText="Monospace"></FontSelectorInput>
+                        <FontSelectorInput name="symbola" displayText="Symbola"></FontSelectorInput>
                     </div>
                 </div>
             </div>
@@ -126,33 +138,29 @@ const Characters = () => {
                     <tbody>
                         {Object.keys(Letters).map((key, index1) =>
                             Letters[key as keyof typeof Letters].map((letter, index2) => (
-                                <tr key={index1 + index2} className={`h-10 ${!letter.modified && "bg-red-950"}`}>
+                                <tr key={index1 + index2} className={`h-10 ${!letter.alt && "bg-red-950"}`}>
                                     <td className="border border-neutral-600 text-center">
-                                        <span className={`mx-0.5 px-1 text-2xl font-${Font[font]}`}>
-                                            {letter.original}
-                                        </span>
+                                        <span className={`mx-0.5 px-1 text-2xl font-${font}`}>{letter.base}</span>
                                     </td>
                                     <td className="border border-neutral-600 text-center">
-                                        <span className={`mx-0.5 px-1 text-2xl font-${Font[font]}`}>
-                                            {letter.modified}
-                                        </span>
+                                        <span className={`mx-0.5 px-1 text-2xl font-${font}`}>{letter.alt}</span>
                                     </td>
                                     <td className="border border-neutral-600 text-center">
                                         <span className="mx-0.5 px-1 font-mono text-rose-400">
-                                            {letter.modified && getCodePointHex(letter.modified)}
+                                            {letter.alt && getCodePointHex(letter.alt)}
                                         </span>
                                     </td>
                                     <td className="border border-neutral-600 text-center">
-                                        {letter.modified &&
-                                            getUTF8Bytes(letter.modified).map((byte, i) => (
+                                        {letter.alt &&
+                                            getUTF8Bytes(letter.alt).map((byte, i) => (
                                                 <span key={i} className="mx-0.5 px-1 font-mono text-rose-400">
                                                     {byte}
                                                 </span>
                                             ))}
                                     </td>
                                     <td className="border border-neutral-600 text-center">
-                                        {letter.modified &&
-                                            getUTF16LEBytes(letter.modified).map((byte, i) => (
+                                        {letter.alt &&
+                                            getUTF16LEBytes(letter.alt).map((byte, i) => (
                                                 <span key={i} className="mx-0.5 px-1 font-mono text-rose-400">
                                                     {byte}
                                                 </span>

@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { FaCopy, FaRegCopy, FaTriangleExclamation } from "react-icons/fa6";
-import { Letters, LettersDisplay, getCodePointHex, getUTF8Bytes, getUTF16LEBytes } from "../scripts/letters";
+import { getCodePointHex, getUTF8Bytes, getUTF16LEBytes } from "../scripts/letters_utilities";
+import { Letters, LettersDisplay } from "../scripts/letters";
+import type { CharacterAlternative } from "../scripts/letters";
 
 interface Props {
     initialInput?: string;
 }
 
+interface Replacement extends CharacterAlternative {
+    utf8: string[];
+    utf16le: string[];
+    codePointHex: string;
+}
+
 const Converter: React.FC<Props> = (props) => {
     const [input, setInput] = useState(props.initialInput || "");
     const [output, setOutput] = useState("");
-    const [replacements, setReplacements] = useState<
-        {
-            original: string;
-            modified: string;
-            block: string;
-            utf8: string[];
-            utf16le: string[];
-            codePointHex: string;
-        }[]
-    >([]);
+    const [replacements, setReplacements] = useState<Replacement[]>([]);
     const [blocks, setBlocks] = useState({
         uppercase: true,
         lowercase: true,
@@ -41,6 +40,10 @@ const Converter: React.FC<Props> = (props) => {
         }
     }, []);
 
+    type Font = "sans" | "symbola" | "mono" | "serif";
+
+    const [font, setFont] = useState<Font>("sans");
+
     function convertText(inputText: string, settingsOverwrite?: typeof settings, blocksOverwrite?: typeof blocks) {
         let localReplacements: typeof replacements = [];
         let localBlocks: typeof blocks = blocks;
@@ -55,17 +58,17 @@ const Converter: React.FC<Props> = (props) => {
         const activeLetters = Object.keys(Letters)
             .filter((key) => localBlocks[key as keyof typeof Letters]) // Only include categories enabled in settings
             .flatMap((key) => Letters[key as keyof typeof Letters]) // Get all letter arrays for enabled categories
-            .filter((l) => l.modified.length > 0); // Filter out empty modified characters
+            .filter((l) => l.alt.length > 0); // Filter out empty alt characters
 
         activeLetters.forEach((letter) => {
-            if (result.includes(letter.original)) {
-                const occurrences = (result.match(new RegExp(escapeRegExp(letter.original), "g")) || []).length;
+            if (result.includes(letter.base)) {
+                const occurrences = (result.match(new RegExp(escapeRegExp(letter.base), "g")) || []).length;
                 totalCount += occurrences;
-                result = result.replaceAll(letter.original, letter.modified);
+                result = result.replaceAll(letter.base, letter.alt);
 
-                const utf8 = getUTF8Bytes(letter.modified);
-                const utf16le = getUTF16LEBytes(letter.modified);
-                const codePointHex = getCodePointHex(letter.modified);
+                const utf8 = getUTF8Bytes(letter.alt);
+                const utf16le = getUTF16LEBytes(letter.alt);
+                const codePointHex = getCodePointHex(letter.alt);
 
                 localReplacements.push({ ...letter, utf8, utf16le, codePointHex });
             }
@@ -185,6 +188,29 @@ const Converter: React.FC<Props> = (props) => {
         );
     };
 
+    const FontSelectorInput = ({ name, displayText }: { name: Font; displayText: string }) => {
+        return (
+            <label
+                htmlFor={`font-${name}`}
+                className={`flex h-auto w-auto cursor-pointer flex-row rounded-lg border-2 p-2 transition-colors duration-150 hover:border-blue-700 ${font === name ? "border-blue-700" : "border-neutral-600"}`}
+            >
+                <span>
+                    <input
+                        type="radio"
+                        name="font"
+                        id={`font-${name}`}
+                        className="hidden"
+                        checked={font === name}
+                        onChange={(e) => {
+                            setFont((prev) => name);
+                        }}
+                    />
+                    <span>{displayText}</span>
+                </span>
+            </label>
+        );
+    };
+
     return (
         <div className="flex w-screen max-w-6xl flex-col items-center justify-center px-4">
             <div className="flex w-full max-w-4xl flex-col gap-4 lg:flex-row">
@@ -196,7 +222,7 @@ const Converter: React.FC<Props> = (props) => {
                         </p>
                     </div>
                     <textarea
-                        className="h-72 w-full resize-none rounded-lg border-2 border-neutral-600 bg-neutral-800 p-2"
+                        className={`h-72 w-full resize-none rounded-lg border-2 border-neutral-600 bg-neutral-800 p-2 font-${font}`}
                         placeholder="Input"
                         value={input}
                         onChange={(e) => {
@@ -211,19 +237,34 @@ const Converter: React.FC<Props> = (props) => {
                 <div className="flex w-full flex-col">
                     <div className="flex flex-row items-center">
                         <p className="mb-2 text-xl font-semibold">Output</p>
-                        <p className={`ml-2 text-sm text-neutral-500 ${replacements.length == 0 && "hidden"}`}>
+                        <p
+                            className={`ml-2 text-sm ${inputStats.total == 0 && "hidden"} ${replacements.length == 0 ? "text-amber-500" : "text-neutral-500"}`}
+                        >
                             {totalSpoofedCount} characters spoofed | {replacements.length} unique characters spoofed
                         </p>
                     </div>
                     <textarea
-                        className="h-72 w-full resize-none rounded-lg border-2 border-neutral-600 bg-neutral-800 p-2"
+                        className={`h-72 w-full resize-none rounded-lg border-2 border-neutral-600 bg-neutral-800 p-2 font-${font}`}
                         placeholder="Output"
                         value={output}
                         readOnly
                     ></textarea>
                 </div>
             </div>
-            <div className="mt-4 flex w-full max-w-4xl flex-col rounded-lg border-2 border-neutral-600 p-4">
+
+            <div className="mt-4 w-full max-w-4xl lg:px-0">
+                <div className="flex flex-row items-center gap-3 rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
+                    <p className="text-lg font-semibold">Fonts</p>
+                    <div className="flex flex-row gap-2 overflow-x-auto text-nowrap">
+                        <FontSelectorInput name="serif" displayText="Sans Serif"></FontSelectorInput>
+                        <FontSelectorInput name="sans" displayText="Sans"></FontSelectorInput>
+                        <FontSelectorInput name="mono" displayText="Monospace"></FontSelectorInput>
+                        <FontSelectorInput name="symbola" displayText="Symbola"></FontSelectorInput>
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-4 flex w-full max-w-4xl flex-col rounded-lg border-2 border-neutral-600 bg-neutral-800 p-4">
                 <div>
                     <p className="mb-2 text-center text-xl">Options</p>
                 </div>
@@ -272,8 +313,8 @@ const Converter: React.FC<Props> = (props) => {
                                 allOriginalChars = [
                                     ...allOriginalChars,
                                     ...Letters[key as keyof typeof Letters].map((item) => {
-                                        if (item.modified.length) {
-                                            return item.original;
+                                        if (item.alt.length) {
+                                            return item.base;
                                         } else {
                                             return "";
                                         }
@@ -295,8 +336,8 @@ const Converter: React.FC<Props> = (props) => {
                                 allOriginalChars = [
                                     ...allOriginalChars,
                                     ...Letters[key as keyof typeof Letters].map((item) => {
-                                        if (!item.modified.length) {
-                                            return item.original;
+                                        if (!item.alt.length) {
+                                            return item.base;
                                         } else {
                                             return "";
                                         }
@@ -321,12 +362,12 @@ const Converter: React.FC<Props> = (props) => {
             </div>
 
             <div
-                className={`mt-4 flex w-full max-w-screen flex-row items-center rounded-lg bg-amber-600 p-4 lg:max-w-xl ${!warnLetters && "hidden"}`}
+                className={`b mt-4 flex w-full max-w-screen flex-row items-center rounded-lg border-2 border-amber-500 bg-amber-600 p-4 lg:max-w-4xl ${!warnLetters && "hidden"}`}
             >
                 <FaTriangleExclamation className="mr-2 text-xl"></FaTriangleExclamation>
                 <p>No letters were replaced</p>
             </div>
-            <div className={`mt-4 flex w-full overflow-auto lg:max-w-2xl ${replacements.length == 0 && "hidden"}`}>
+            <div className={`mt-4 flex w-full overflow-auto lg:max-w-4xl ${replacements.length == 0 && "hidden"}`}>
                 <table className="min-w-full table-auto border-collapse overflow-auto border-2 border-neutral-600 lg:w-xl">
                     <thead className="h-8 bg-neutral-700 text-white">
                         <tr>
@@ -342,10 +383,10 @@ const Converter: React.FC<Props> = (props) => {
                         {replacements.map((replacement, index) => (
                             <tr key={index} className="h-10">
                                 <td className="border border-neutral-600 text-center">
-                                    <span className="font-symbola mx-0.5 px-1 text-2xl">{replacement.original}</span>
+                                    <span className={`font-${font} mx-0.5 px-1 text-2xl`}>{replacement.base}</span>
                                 </td>
                                 <td className="border border-neutral-600 text-center">
-                                    <span className="font-symbola mx-0.5 px-1 text-2xl">{replacement.modified}</span>
+                                    <span className={`font-${font} mx-0.5 px-1 text-2xl`}>{replacement.alt}</span>
                                 </td>
                                 <td className="border border-neutral-600 text-center">
                                     <span className="mx-0.5 bg-neutral-800 px-1 font-mono text-rose-400">
